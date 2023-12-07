@@ -1,0 +1,8 @@
+version '3.8'
+
+services:
+
+  webserver:
+    image: web/static
+    ports:
+      - "8080:80"

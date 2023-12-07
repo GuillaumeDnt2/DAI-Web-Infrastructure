@@ -1,5 +1,5 @@
 //Build image
-docker build -t borzoinginx .
+docker build -t web/static .
 
 //Run
-docker run -p 8080:80 -d borzoinginx
+docker run -p 8080:80 -d web/static
