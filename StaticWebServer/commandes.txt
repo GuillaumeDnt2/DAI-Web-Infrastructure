@@ -1,0 +1,5 @@
+//Build image
+docker build -t borzoinginx .
+
+//Run
+docker run -p 8080:80 -d borzoinginx
