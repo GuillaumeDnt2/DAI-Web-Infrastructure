@@ -22,7 +22,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>HttpAPI</mainClass>
+                            <mainClass>API</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,8 +1,10 @@
+
 import io.javalin.*;
 
 public class API{
    
+    private static int PORT = 3141;
     public static void main (String[] args){
-        System.out.println("TAMERE");
+        Javalin app = Javalin.create().start(PORT);
     }
 }
