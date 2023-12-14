@@ -15,7 +15,6 @@ public class CountryController {
 
     public void getAll(Context ctx){
         ctx.json(countries);
-        System.out.println("get all");
     }
 
 }
