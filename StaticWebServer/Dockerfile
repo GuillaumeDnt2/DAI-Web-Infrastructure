@@ -1,2 +1,3 @@
 FROM nginx:latest
-COPY ./site/ /usr/share/nginx/html/
+COPY ./site/ /www
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
