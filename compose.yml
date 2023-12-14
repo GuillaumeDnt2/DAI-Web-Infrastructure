@@ -1,0 +1,6 @@
+
+services:
+  webserver:
+    image: web/static
+    ports:
+      - "8080:80"

@@ -1,5 +1,9 @@
 //Build image
-docker build -t webserver/static .
+docker build -t web/static .
 
 //Run
-docker run -p 8080:80 -d webserver/static
+docker run -p 8080:80 -d web/static
+
+//
+docker compose up
+docker compose down
