@@ -8,5 +8,6 @@ public class API{
         Javalin app = Javalin.create().start(PORT);
         CountryController controller = new CountryController();
         app.get("/api/countries", controller::getAll);
+        System.out.println("Server started");
     }
 }
