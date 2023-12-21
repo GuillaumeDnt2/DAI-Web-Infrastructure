@@ -1,0 +1,19 @@
+meta {
+  name: Update Switzerland
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3141/api/country/Switzerland
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Switzerland",
+    "capital": "Lausanne",
+    "population": 8796669
+  }
+}

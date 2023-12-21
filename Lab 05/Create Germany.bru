@@ -1,0 +1,19 @@
+meta {
+  name: Create Germany
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3141/api/country
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Germany",
+    "capital": "Berlin",
+    "population": 832994633
+  }
+}
