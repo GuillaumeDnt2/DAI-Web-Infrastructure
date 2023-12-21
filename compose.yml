@@ -1,11 +1,39 @@
 
 services:
-  webserver:
-    image: web/static
+  postgresql:
+    build:
+      context: ./Database
+    environment:
+      - POSTGRES_USER=apiUser
+      - POSTGRES_PASSWORD=1_L0VE_D@1
+      - POSTGRES_DB=countryDB
     ports:
-      - "8080:80"
+      - 5432:5432
+
+  webserver:
+    build:
+      context: ./StaticWebServer
+    deploy:
+      replicas: 3
+    labels:
+      - traefik.http.routers.webserver.rule=Host(`webserver.localhost`)
 
   api:
-    image: http/api
+    build:
+      context: ./HttpAPI
+    deploy:
+      replicas: 2
+    labels:
+      - traefik.http.routers.api.rule=Host(`api.localhost`)
+
+  traefik:
+    image: traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
+      - "8888:80"
       - "3141:3141"
+      - "8080:8080"
