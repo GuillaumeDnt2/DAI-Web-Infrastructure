@@ -27,3 +27,48 @@ services:
 ``` 
 Pour l'instant docker compose va démarrer l'image du site web statique et bind le port 80 sur 8080.
 
+## API CRUD HTTP
+Maintenant pour faire une API HTTP nous avons développé un petit programme Java utilisant la librairie Javalin. 
+Cette API nous permet de gérer une liste de pays ainsi que leurs informations (capitales et population). 
+L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
+Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)). 
+## Package Java avec Maven
+Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
+```
+<dependencies>
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin-bundle</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+</dependencies>
+```
+
+Il faut également indiquer à Maven de créer un package qui contient les dépendances : 
+```
+<plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <version>3.6.0</version>
+    <configuration>
+    <descriptorRefs>
+        <descriptorRef>jar-with-dependencies</descriptorRef>
+    </descriptorRefs>
+     <archive>
+        <manifest>
+            <mainClass>API</mainClass>
+        </manifest>
+    </archive>
+    </configuration>
+      <executions>
+<execution>
+    <id>make-assembly</id>
+    <phase>package</phase>
+    <goals>
+    <goal>single</goal>
+    </goals>
+</execution>
+</executions>
+</plugin>
+```
+
+ 
