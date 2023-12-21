@@ -4,3 +4,8 @@ services:
     image: web/static
     ports:
       - "8080:80"
+
+  api:
+    image: http/api
+    ports:
+      - "3141:3141"

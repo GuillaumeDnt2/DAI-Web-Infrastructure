@@ -16,22 +16,32 @@
 
     <build>
         <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>API</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
+           
 
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.2</version>
-			</plugin>
+			
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                 <archive>
+                    <manifest>
+                        <mainClass>API</mainClass>
+                    </manifest>
+                </archive>
+                </configuration>
+                  <executions>
+            <execution>
+                <id>make-assembly</id>
+                <phase>package</phase>
+                <goals>
+                <goal>single</goal>
+                </goals>
+            </execution>
+            </executions>
+            </plugin>
 
         </plugins>
     </build>
@@ -39,21 +49,11 @@
     <dependencies>
         <dependency>
             <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
+            <artifactId>javalin-bundle</artifactId>
             <version>5.6.3</version>
-	    </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.7</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.15.0</version>
-        </dependency>
+        
+       
     </dependencies>
 	
 </project>
