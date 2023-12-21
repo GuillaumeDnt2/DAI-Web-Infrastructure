@@ -71,6 +71,46 @@ Il faut également indiquer à Maven de créer un package qui contient les dépe
 </plugin>
 ```
 ### Exemples de commandes avec Bruno :
-<img width="341" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/d9a077dd-1d7b-4ea7-ab31-f270265967fd">
+Ajout d'un pays :
 
- 
+<img width="355" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/56c62a4b-100f-48c1-b06b-b1792bdd28c8"> 
+
+Suppression d'un pays :
+
+<img width="343" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/c86319f4-ab1a-4dde-93eb-364a33f8784d"> 
+
+Modification d'un pays :
+
+<img width="341" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/d9a077dd-1d7b-4ea7-ab31-f270265967fd"> 
+
+Affichage d'un pays :
+
+<img width="343" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/c82d5350-e101-466b-81b1-33a18c6f7fe8"> 
+
+Affichage de tous les pays :
+
+<img width="350" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/3168b836-ecac-4a78-9d4e-162a86b62ff4"> 
+
+Exemple de résultat :
+```
+{
+  "Switzerland": {
+    "name": "Switzerland",
+    "capital": "Lausanne",
+    "population": 8796669,
+    "flagPath": null
+  },
+  "Germany": {
+    "name": "Germany",
+    "capital": "Berlin",
+    "population": 832994633,
+    "flagPath": null
+  },
+  "India": {
+    "name": "India",
+    "capital": "New Delhi",
+    "population": 1428627663,
+    "flagPath": null
+  }
+}
+```
