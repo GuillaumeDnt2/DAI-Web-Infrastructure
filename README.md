@@ -70,5 +70,7 @@ Il faut également indiquer à Maven de créer un package qui contient les dépe
 </executions>
 </plugin>
 ```
+### Exemples de commandes avec Bruno :
+<img width="341" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/d9a077dd-1d7b-4ea7-ab31-f270265967fd">
 
  
