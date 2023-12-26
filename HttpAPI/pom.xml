@@ -16,12 +16,25 @@
 
     <build>
         <plugins>
-           
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>API</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 
-			
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.1.2</version>
+			</plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.3.0</version>
                 <configuration>
                 <descriptorRefs>
                     <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -32,15 +45,7 @@
                     </manifest>
                 </archive>
                 </configuration>
-                  <executions>
-            <execution>
-                <id>make-assembly</id>
-                <phase>package</phase>
-                <goals>
-                <goal>single</goal>
-                </goals>
-            </execution>
-            </executions>
+                
             </plugin>
 
         </plugins>
@@ -52,6 +57,8 @@
             <artifactId>javalin-bundle</artifactId>
             <version>5.6.3</version>
         </dependency>
+        
+       
     </dependencies>
 	
 </project>
