@@ -91,7 +91,7 @@ Affichage de tous les pays :
 
 <img width="350" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/3168b836-ecac-4a78-9d4e-162a86b62ff4"> 
 
-Exemple de résultat :
+Exemple de résultat avec la commande GET ci dessus :
 ```
 {
   "Switzerland": {
