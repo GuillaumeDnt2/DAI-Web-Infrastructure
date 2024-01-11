@@ -44,32 +44,7 @@ Pour faire un nouveau package Java de cet API nous devons ajouter une dépendanc
 </dependencies>
 ```
 
-Il faut également indiquer à Maven de créer un package qui contient les dépendances : 
-```
-<plugin>
-    <artifactId>maven-assembly-plugin</artifactId>
-    <version>3.6.0</version>
-    <configuration>
-    <descriptorRefs>
-        <descriptorRef>jar-with-dependencies</descriptorRef>
-    </descriptorRefs>
-     <archive>
-        <manifest>
-            <mainClass>API</mainClass>
-        </manifest>
-    </archive>
-    </configuration>
-      <executions>
-<execution>
-    <id>make-assembly</id>
-    <phase>package</phase>
-    <goals>
-    <goal>single</goal>
-    </goals>
-</execution>
-</executions>
-</plugin>
-```
+
 ### Exemples de commandes avec Bruno :
 Ajout d'un pays :
 
@@ -131,7 +106,23 @@ Exemple de résultat avec la commande GET ci dessus :
       - "3141:3141"
       - "8080:8080"
 ```
+
 Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik.
+
+### Configuration de l'image du server web
+```
+webserver:
+    build:
+      context: ./StaticWebServer
+    expose:
+      - "80"  
+    deploy:
+      replicas: 1
+    labels:
+      - traefik.http.routers.webserver.rule=Host(`localhost`)
+```
+La commande .rule=Host('localhost') permet de configurer Traefik pour qu'il redirige cet url vers la serveur web. Donc pour accèder au site web il faut utiliser http:localhost.
+
 ### Configuration de l'image de l'API
 ```
  api:
@@ -145,19 +136,7 @@ Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour 
       - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api/`)
 ```
 Il faut spécifier un chemin supplémentaire pour que Traefik redirige le chemin "localhost/api/" sur l'image Docker de l'API.
-Le paramètre "expose" permet de configurer quel port sera utilisé pour cette image.
-On ne doit pas spécifier le port (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik. 
-### Configuration de l'image du server web
-```
-webserver:
-    build:
-      context: ./StaticWebServer
-    expose:
-      - "80"  
-    deploy:
-      replicas: 1
-    labels:
-      - traefik.http.routers.webserver.rule=Host(`localhost`)
-```
-Traefik va simplement rediriger le chemin "localhost" sur le site web statique. Donc dans l'url pour atteindre le site sera "http://localhost".
+On ne doit pas spécifier le port pour accéder à l'API (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik pour qu'il puisse le reconnaitre et nous rediriger vers l'API.
+
+
 
