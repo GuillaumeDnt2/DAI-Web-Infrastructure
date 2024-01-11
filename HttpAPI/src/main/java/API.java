@@ -7,10 +7,10 @@ public class API{
     public static void main (String[] args){
         Javalin app = Javalin.create().start(PORT);
         CountryController controller = new CountryController();
-        app.get("/api/countries", controller::getAll);
-        app.get("/api/country/{name}", controller::get);
-        app.post("/api/country", controller::create);
-        app.put("/api/country/{name}", controller::update);
-        app.delete("/api/country/{name}", controller::delete);
+        app.get("/countries", controller::getAll);
+        app.get("/country/{name}", controller::get);
+        app.post("/country", controller::create);
+        app.put("/country/{name}", controller::update);
+        app.delete("/country/{name}", controller::delete);
     }
 }

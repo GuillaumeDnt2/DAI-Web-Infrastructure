@@ -1,4 +1,3 @@
-
 services:
   postgresql:
     build:
@@ -10,21 +9,28 @@ services:
     ports:
       - 5432:5432
 
-  webserver:
-    build:
-      context: ./StaticWebServer
-    deploy:
-      replicas: 3
-    labels:
-      - traefik.http.routers.webserver.rule=Host(`webserver.localhost`)
-
   api:
     build:
       context: ./HttpAPI
+    expose:
+      - "3141"  
     deploy:
-      replicas: 2
+      replicas: 1
     labels:
-      - traefik.http.routers.api.rule=Host(`api.localhost`)
+      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
+
+
+  webserver:
+    build:
+      context: ./StaticWebServer
+    expose:
+      - "80"  
+    deploy:
+      replicas: 1
+    labels:
+      - traefik.http.routers.webserver.rule=Host(`localhost`)
+
+
 
   traefik:
     image: traefik
@@ -34,6 +40,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - "8888:80"
+      - "80:80"
       - "3141:3141"
       - "8080:8080"
