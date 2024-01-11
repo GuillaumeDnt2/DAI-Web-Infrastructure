@@ -114,3 +114,50 @@ Exemple de résultat avec la commande GET ci dessus :
   }
 }
 ```
+
+## Reverse proxy avec Traefik
+### Modifications du fichier docker compose
+#### Configuration de l'image Traefik
+```
+ traefik:
+    image: traefik
+    command:
+      - --api.insecure=true
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+      - "3141:3141"
+      - "8080:8080"
+```
+Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik.
+### Configuration de l'image de l'API
+```
+ api:
+    build:
+      context: ./HttpAPI
+    expose:
+      - "3141"  
+    deploy:
+      replicas: 1
+    labels:
+      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api/`)
+```
+Il faut spécifier un chemin supplémentaire pour que Traefik redirige le chemin "localhost/api/" sur l'image Docker de l'API.
+Le paramètre "expose" permet de configurer quel port sera utilisé pour cette image.
+On ne doit pas spécifier le port (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik. 
+### Configuration de l'image du server web
+```
+webserver:
+    build:
+      context: ./StaticWebServer
+    expose:
+      - "80"  
+    deploy:
+      replicas: 1
+    labels:
+      - traefik.http.routers.webserver.rule=Host(`localhost`)
+```
+Traefik va simplement rediriger le chemin "localhost" sur le site web statique. Donc dans l'url pour atteindre le site sera "http://localhost".
+
