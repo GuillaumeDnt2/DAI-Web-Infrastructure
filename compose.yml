@@ -17,7 +17,7 @@ services:
     deploy:
       replicas: 1
     labels:
-      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
+      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api/`)
 
 
   webserver:
