@@ -9,26 +9,30 @@ services:
     ports:
       - 5432:5432
 
+
   api:
     build:
       context: ./HttpAPI
     expose:
       - "3141"  
     deploy:
-      replicas: 1
+      replicas: 2
     labels:
-      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api/`)
-
-
+      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
+    
+   
+   
   webserver:
     build:
       context: ./StaticWebServer
     expose:
       - "80"  
     deploy:
-      replicas: 1
+      replicas: 2
     labels:
       - traefik.http.routers.webserver.rule=Host(`localhost`)
+    
+    
 
 
 
