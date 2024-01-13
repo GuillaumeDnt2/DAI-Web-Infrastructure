@@ -149,7 +149,7 @@ Pour que le container Docker Compose accueille plusieurs instances de chaque ser
       replicas: 3
 ```
 On peut aussi ajouter des instances au container avec la commande : ```docker compose up --scale <service>=nbInstance --no-recreate```. 
-Le petit désavantage de cette commande est qu'elle va bien créer n instance du service mais cela va réinitialiser le nombre d'instances des autres services au nombre spécifié dans le paramètre deploy du fichier docker-compose.yml. 
+Le petit désavantage de cette commande est qu'elle va bien créer n instance du service mais cela va réinitialiser le nombre d'instances des autres services au nombre spécifié dans le paramètre deploy du fichier compose.yml. 
 
 Pour pallier à ce problème il faut spécifier les deux services "api" et "webserver" dans la commande :
 ```docker compose up --scale api=3 --scale webserver=4 --no-recreate```
