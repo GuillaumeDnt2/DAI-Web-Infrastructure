@@ -42,7 +42,9 @@ services:
       - --api.insecure=true
       - --providers.docker
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock #Docker socket
+      - /var/run/config:/Traefik/traefik.yml #Sticky sessions config
+      #TODO : certificate TLS
     ports:
       - "80:80"
       - "3141:3141"

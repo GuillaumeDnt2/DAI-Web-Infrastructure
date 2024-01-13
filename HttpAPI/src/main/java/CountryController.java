@@ -44,6 +44,8 @@ public class CountryController {
     public void getAll(Context ctx){
         HashMap<Integer, Country> values = new HashMap<>();
         try{
+            //String cookie = ctx.cookie("RouteIDAPI");
+            //System.out.println("Cookie: " + cookie);
             int id = 0;
             var countries = connect.createStatement().executeQuery("SELECT name, capital, population FROM country");
             while (countries.next()) {
@@ -53,6 +55,7 @@ public class CountryController {
         catch(Exception e){
             System.out.println(e.getMessage());
         }
+        
         ctx.json(values);
     }
 
