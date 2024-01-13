@@ -32,6 +32,7 @@ Maintenant pour faire une API HTTP nous avons développé un petit programme Jav
 Cette API nous permet de gérer une liste de pays ainsi que leurs informations (capitales et population). 
 L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
 Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)). 
+
 ## Package Java avec Maven
 Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
 ```
@@ -121,7 +122,7 @@ webserver:
     labels:
       - traefik.http.routers.webserver.rule=Host(`localhost`)
 ```
-La commande .rule=Host('localhost') permet de configurer Traefik pour qu'il redirige cet url vers la serveur web. Donc pour accèder au site web il faut utiliser http:localhost.
+La commande .rule=Host('localhost') permet de configurer Traefik pour qu'il redirige cet url vers la serveur web. Donc pour accèder au site web il faut utiliser l'url "http:localhost".
 
 ### Configuration de l'image de l'API
 ```
@@ -139,4 +140,19 @@ Il faut spécifier un chemin supplémentaire pour que Traefik redirige le chemin
 On ne doit pas spécifier le port pour accéder à l'API (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik pour qu'il puisse le reconnaitre et nous rediriger vers l'API.
 
 
+## Load Balancing
+Commande pour ajouter des nouvelles instances d'un service : ```docker compose up --scale <service>=nbInstance --no-recreate```.
 
+Pour que le container Docker Compose accueille plusieurs instances de chaque service, il faut ajouter ce paramètre à chaque service :
+```
+  deploy:
+      replicas: 3
+```
+On peut aussi ajouter des instances au container avec la commande : ```docker compose up --scale <service>=nbInstance --no-recreate```. 
+Le petit désavantage de cette commande est qu'elle va bien créer n instance du service mais cela va réinitialiser le nombre d'instances des autres services au nombre spécifié dans le paramètre deploy du fichier docker-compose.yml. 
+
+Pour pallier à ce problème il faut spécifier les deux services "api" et "webserver" dans la commande :
+```docker compose up --scale api=3 --scale webserver=4 --no-recreate```
+Il est aussi possible de d'abbord lancer traefik tout seul avec la commande ```docker compose up traefik``` et par la suite de lancer le nombre d'instance qu'on veut pour chaques services.
+
+*C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveur géré par load balancing sans arrêter le container Docker.*
