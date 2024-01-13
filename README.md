@@ -139,4 +139,10 @@ Il faut spécifier un chemin supplémentaire pour que Traefik redirige le chemin
 On ne doit pas spécifier le port pour accéder à l'API (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik pour qu'il puisse le reconnaitre et nous rediriger vers l'API.
 
 
-
+## Load Balancing
+Commande pour ajouter des nouvelles instances d'un service : ```docker compose up --scale <service>=nbInstance --no-recreate```
+Ajouter dans le docker compose le paramètre :
+```
+  deploy:
+      replicas: 3
+```
