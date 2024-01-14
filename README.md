@@ -17,6 +17,7 @@ FROM nginx:latest
 COPY ./site/ /www
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 ```
+Dans ce dockerfile on monte le répertoire principal du site et on indique aussi le fichier de configuration de Nginx.
 ### Configuration docker compose
 ```
 services:
@@ -141,8 +142,6 @@ On ne doit pas spécifier le port pour accéder à l'API (par ex. "localhost:314
 
 
 ## Load Balancing
-Commande pour ajouter des nouvelles instances d'un service : ```docker compose up --scale <service>=nbInstance --no-recreate```.
-
 Pour que le container Docker Compose accueille plusieurs instances de chaque service, il faut ajouter ce paramètre à chaque service :
 ```
   deploy:
@@ -153,6 +152,6 @@ Le petit désavantage de cette commande est qu'elle va bien créer n instance du
 
 Pour pallier à ce problème il faut spécifier les deux services "api" et "webserver" dans la commande :
 ```docker compose up --scale api=3 --scale webserver=4 --no-recreate```
-Il est aussi possible de d'abbord lancer traefik tout seul avec la commande ```docker compose up traefik``` et par la suite de lancer le nombre d'instance qu'on veut pour chaques services.
+Il est aussi possible de d'abbord lancer traefik tout seul avec la commande ```docker compose up traefik``` et par la suite lancer le nombre d'instance qu'on veut pour chaques services.
 
 *C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveur géré par load balancing sans arrêter le container Docker.*
