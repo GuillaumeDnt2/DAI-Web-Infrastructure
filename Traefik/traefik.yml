@@ -1,7 +1,0 @@
-http:
-  services:
-    api:
-      loadBalancer:
-        sticky:
-          cookie: RouteIDAPI
-    

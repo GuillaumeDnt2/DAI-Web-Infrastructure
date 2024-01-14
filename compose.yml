@@ -19,6 +19,8 @@ services:
       replicas: 2
     labels:
       - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
+      - traefik.http.services.api.loadbalancer.sticky.cookie=true
+      - traefik.http.services.api.loadbalancer.sticky.cookie.name=RouteID
     
    
    
@@ -34,16 +36,17 @@ services:
     
     
 
-
-
   traefik:
     image: traefik
     command:
       - --api.insecure=true
       - --providers.docker
+      - --log.level=DEBUG
+      - --accesslog=true
+      - --log.filePath=/logs/traefik.log
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock #Docker socket
-      - /var/run/config:/Traefik/traefik.yml #Sticky sessions config
+      - ./logs/:/logs/
       #TODO : certificate TLS
     ports:
       - "80:80"
