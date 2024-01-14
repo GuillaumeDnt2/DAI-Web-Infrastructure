@@ -167,4 +167,15 @@ Pour pallier à ce problème il faut spécifier les deux services "api" et "webs
 ```docker compose up --scale api=3 --scale webserver=4 --no-recreate```
 Il est aussi possible de d'abbord lancer traefik tout seul avec la commande ```docker compose up traefik``` et par la suite lancer le nombre d'instance qu'on veut pour chaques services.
 
-*C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveur géré par load balancing sans arrêter le container Docker.*
+> C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveur géré par load balancing sans arrêter le container Docker.
+
+## Sticky sessions
+Maintenant nous voulons que les clients communiquent avec l'API sur la même instance à chaque fois. Il nous faut alors activer les sessions persistantes sur Traefik.
+### Modification de compose.yml
+Il faut ajouter deux nouvelles lignes dans les labels de l'API :
+```
+ - traefik.http.services.api.loadbalancer.sticky.cookie=true
+ - traefik.http.services.api.loadbalancer.sticky.cookie.name=RouteID
+```
+La 1ère ligne indique qu'on active les sticky sessions, avec Traefik les sticky sessions sont réalisées par des cookies ajoutés dans les headers HTTP.
+La 2e ligne indique le nom du cookie.
