@@ -179,3 +179,30 @@ Il faut ajouter deux nouvelles lignes dans les labels de l'API :
 ```
 La 1ère ligne indique qu'on active les sticky sessions, avec Traefik les sticky sessions sont réalisées par des cookies ajoutés dans les headers HTTP.
 La 2e ligne indique le nom du cookie.
+
+## Sécurisation TLS
+
+## Interface de gestion de l'infrastructure
+Nous avons décidé d'utiliser une solution existante pour gérer une infrastructure sur Docker.
+Nous allons utiliser `Portainer`.
+### Portainer
+Portainer est un outil de gestion d'environnements Docker ou Kubernetes, il propose une web app qui permet entre autre de créer, modifier ou supprimer des containers au sein d'un environnement créé avec Docker Compose par exemple.
+#### Déploiement de Portainer
+Portainer est une image Docker qui doit s'exécuter dans une stack différente de l'infrastructure web. Pour cela il faut faire un nouveau fichier Docker compose :
+```
+version: "3"
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
+```
+Portainer a besoin d'avoir accès au socket Docker afin qu'il puisse y faire des lectures et des modifications.
+Ensuite il suffit simplement de lancer notre infrastructure en ligne de commande avec ```docker compose up``` dans le réportoire où se trouve le fichier `compose.yml`.
+#### Interface de Portainer
