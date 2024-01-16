@@ -7,7 +7,7 @@ Ce projet consiste en une infrastructure web implémentée à l'aide de Docker C
 ### Dockerfile
 Pour créer notre image docker, nous avons repris la dernière image officielle de nginx et copié notre site web dans le dossier /www et le fichier de configuration nginx.
 
-### nginx.conf
+#### nginx.conf
 ```
 server{
     listen 0.0.0.0:80;
@@ -22,7 +22,7 @@ server{
 Notre serveur nginx est configuré pour écouter toutes les connexion sur le port 80 (0.0.0.0:80) et aussi configurer la racine de notre serveur dans le dossier /www (le dossier contenant notre site web). Notre site web ne comporte que une seul page et donc nous avons une seul location avec notre fichier index.html.
 
 ### Site web statique
-Nous avons choisi une template sur startboostrap.com et légérement modifié sont contenu pour en faire un site web simple avec quelque boutons et un menu.
+Nous avons choisi une template sur startboostrap.com et avons légérement modifié sont contenu pour en faire un site web simple avec quelque boutons et un menu.
 #### Image docker 
 Contenu du dockerfile de l'image du site web statique:
 ```
@@ -152,6 +152,8 @@ La commande .rule=Host('localhost') permet de configurer Traefik pour qu'il redi
 ```
 Il faut spécifier un chemin supplémentaire pour que Traefik redirige le chemin "localhost/api/" sur l'image Docker de l'API.
 On ne doit pas spécifier le port pour accéder à l'API (par ex. "localhost:3141") sinon ça n'arrivera pas sur Traefik. On doit seulement utiliser le chemin configuré pour Traefik pour qu'il puisse le reconnaitre et nous rediriger vers l'API.
+> [!IMPORTANT]
+> Il faut modifier les urls d'accès dans l'API car maintenant le chemin de base de l'api est `localhost/api` et plus juste `localhost`
 
 
 ## Load Balancing
