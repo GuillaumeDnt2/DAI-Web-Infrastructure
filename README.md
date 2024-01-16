@@ -167,7 +167,8 @@ Pour pallier à ce problème il faut spécifier les deux services "api" et "webs
 ```docker compose up --scale api=3 --scale webserver=4 --no-recreate```
 Il est aussi possible de d'abbord lancer traefik tout seul avec la commande ```docker compose up traefik``` et par la suite lancer le nombre d'instance qu'on veut pour chaques services.
 
-> C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveur géré par load balancing sans arrêter le container Docker.
+> [!NOTE] 
+> C'est comme ça qu'on peut ajuster dynamiquement le nombre de serveurs gérés par load balancing sans arrêter le container Docker.
 
 ## Sticky sessions
 Maintenant nous voulons que les clients communiquent avec l'API sur la même instance à chaque fois. Il nous faut alors activer les sessions persistantes sur Traefik.
@@ -185,8 +186,10 @@ La 2e ligne indique le nom du cookie.
 ## Interface de gestion de l'infrastructure
 Nous avons décidé d'utiliser une solution existante pour gérer une infrastructure sur Docker.
 Nous allons utiliser `Portainer`.
+
 ### Portainer
 Portainer est un outil de gestion d'environnements Docker ou Kubernetes, il propose une web app qui permet entre autre de créer, modifier ou supprimer des containers au sein d'un environnement créé avec Docker Compose par exemple.
+
 #### Déploiement de Portainer
 Portainer est une image Docker qui doit s'exécuter dans une stack différente de l'infrastructure web. Pour cela il faut faire un nouveau fichier Docker compose :
 ```
@@ -205,4 +208,35 @@ volumes:
 ```
 Portainer a besoin d'avoir accès au socket Docker afin qu'il puisse y faire des lectures et des modifications.
 Ensuite il suffit simplement de lancer notre infrastructure en ligne de commande avec ```docker compose up``` dans le réportoire où se trouve le fichier `compose.yml`.
+Portainer est par défaut accessible depuis le chemin ```https://localhost:9443```.
 #### Interface de Portainer
+> [!NOTE] 
+> Avant de commencer à utiliser Portainer, il faut créer un compte administrateur qui est local au container Docker.
+
+Contenu de l'onglet `stack` :
+
+<img width="646" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/f9f2b997-4984-48ec-97ab-848119167aaa">
+
+À ce stade il existe deux stacks dans Docker, une pour l'infrastructure web et une autre pour Portainer seul.
+En sélectionnant la stack de l'infrastructure web nous pouvons voir la liste des containers qu'elle contient :
+
+<img width="661" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/640a0e72-c4ea-40d8-b5f9-e51594e2ad5e">
+
+
+Depuis ici on peut effectuer plusieures actions sur les containers, les arrêter, les supprimer ou les modifier.
+#### Ajouter plus de serveur
+Depuis la page d'un container on peut sélectionner l'option `Duplicate/Edit` :
+
+<img width="549" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/f29a4113-93ac-4a9c-a042-cfb29a264ecd">
+
+Ce qui nous permet ensuite de créer une copie de ce container si on change le nom.
+
+> [!TIP]
+> Il ne faut pas oublier d'exposer le port correspondant au service sur le container. 3141 pour l'API et 80 pour le web statique
+> <img width="816" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/f59f52cc-bb40-496b-8f26-c431f79ff2c6">
+
+Pour terminer il faut sélectionner `Deploy the container` et une nouvelle instance de notre serveur sera en ligne et Traefik le reconnaitra directement.
+
+
+
+
