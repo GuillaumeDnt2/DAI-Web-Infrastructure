@@ -1,0 +1,258 @@
+time="2024-01-14T17:58:01Z" level=info msg="Traefik version 2.10.7 built on 2023-12-06T15:54:59Z"
+time="2024-01-14T17:58:01Z" level=debug msg="Static configuration loaded {\"global\":{\"checkNewVersion\":true},\"serversTransport\":{\"maxIdleConnsPerHost\":200},\"entryPoints\":{\"http\":{\"address\":\":80\",\"transport\":{\"lifeCycle\":{\"graceTimeOut\":\"10s\"},\"respondingTimeouts\":{\"idleTimeout\":\"3m0s\"}},\"forwardedHeaders\":{},\"http\":{},\"http2\":{\"maxConcurrentStreams\":250},\"udp\":{\"timeout\":\"3s\"}},\"traefik\":{\"address\":\":8080\",\"transport\":{\"lifeCycle\":{\"graceTimeOut\":\"10s\"},\"respondingTimeouts\":{\"idleTimeout\":\"3m0s\"}},\"forwardedHeaders\":{},\"http\":{},\"http2\":{\"maxConcurrentStreams\":250},\"udp\":{\"timeout\":\"3s\"}}},\"providers\":{\"providersThrottleDuration\":\"2s\",\"docker\":{\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"exposedByDefault\":true,\"swarmModeRefreshSeconds\":\"15s\"}},\"api\":{\"insecure\":true,\"dashboard\":true},\"log\":{\"level\":\"DEBUG\",\"filePath\":\"/logs/traefik.log\",\"format\":\"common\"},\"accessLog\":{\"format\":\"common\",\"filters\":{},\"fields\":{\"defaultMode\":\"keep\",\"headers\":{\"defaultMode\":\"drop\"}}}}"
+time="2024-01-14T17:58:01Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
+time="2024-01-14T17:58:01Z" level=info msg="Starting provider aggregator aggregator.ProviderAggregator"
+time="2024-01-14T17:58:01Z" level=debug msg="Starting TCP Server" entryPointName=traefik
+time="2024-01-14T17:58:01Z" level=info msg="Starting provider *traefik.Provider"
+time="2024-01-14T17:58:01Z" level=debug msg="*traefik.Provider provider configuration: {}"
+time="2024-01-14T17:58:01Z" level=info msg="Starting provider *acme.ChallengeTLSALPN"
+time="2024-01-14T17:58:01Z" level=debug msg="Starting TCP Server" entryPointName=http
+time="2024-01-14T17:58:01Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"entryPoints\":[\"traefik\"],\"service\":\"api@internal\",\"rule\":\"PathPrefix(`/api`)\",\"priority\":2147483646},\"dashboard\":{\"entryPoints\":[\"traefik\"],\"middlewares\":[\"dashboard_redirect@internal\",\"dashboard_stripprefix@internal\"],\"service\":\"dashboard@internal\",\"rule\":\"PathPrefix(`/`)\",\"priority\":2147483645}},\"services\":{\"api\":{},\"dashboard\":{},\"noop\":{}},\"middlewares\":{\"dashboard_redirect\":{\"redirectRegex\":{\"regex\":\"^(http:\\\\/\\\\/(\\\\[[\\\\w:.]+\\\\]|[\\\\w\\\\._-]+)(:\\\\d+)?)\\\\/$\",\"replacement\":\"${1}/dashboard/\",\"permanent\":true}},\"dashboard_stripprefix\":{\"stripPrefix\":{\"prefixes\":[\"/dashboard/\",\"/dashboard\"]}}},\"serversTransports\":{\"default\":{\"maxIdleConnsPerHost\":200}}},\"tcp\":{},\"udp\":{},\"tls\":{}}" providerName=internal
+time="2024-01-14T17:58:01Z" level=info msg="Starting provider *docker.Provider"
+time="2024-01-14T17:58:01Z" level=debug msg="*acme.ChallengeTLSALPN provider configuration: {}"
+time="2024-01-14T17:58:01Z" level=debug msg="*docker.Provider provider configuration: {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"exposedByDefault\":true,\"swarmModeRefreshSeconds\":\"15s\"}"
+time="2024-01-14T17:58:01Z" level=debug msg="Provider connection established with docker 24.0.6 (API 1.43)" providerName=docker
+time="2024-01-14T17:58:01Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"service\":\"api\",\"rule\":\"Host(`localhost`) \\u0026\\u0026 PathPrefix(`/api`)\"},\"postgresql-l05\":{\"service\":\"postgresql-l05\",\"rule\":\"Host(`postgresql-l05`)\"},\"traefik-l05\":{\"service\":\"traefik-l05\",\"rule\":\"Host(`traefik-l05`)\"},\"webserver\":{\"service\":\"webserver-l05\",\"rule\":\"Host(`localhost`)\"}},\"services\":{\"api\":{\"loadBalancer\":{\"sticky\":{\"cookie\":{\"name\":\"RouteID\"}},\"servers\":[{\"url\":\"http://172.21.0.3:3141\"}],\"passHostHeader\":true}},\"postgresql-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.4:5432\"}],\"passHostHeader\":true}},\"traefik-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.5:80\"}],\"passHostHeader\":true}},\"webserver-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.2:80\"},{\"url\":\"http://172.21.0.6:80\"}],\"passHostHeader\":true}}}},\"tcp\":{},\"udp\":{}}" providerName=docker
+time="2024-01-14T17:58:01Z" level=debug msg="Provider event received {Status:start ID:3a6e7aa5cb91cacb018b97a32c835b45ac75ad5e5cf924638078897f5c207ca1 From:l05-api Type:container Action:start Actor:{ID:3a6e7aa5cb91cacb018b97a32c835b45ac75ad5e5cf924638078897f5c207ca1 Attributes:map[com.docker.compose.config-hash:3dc8a455f34042d76922e7c58fdca3aa07970704dd222fc0b279e37e23b54a3f com.docker.compose.container-number:2 com.docker.compose.depends_on: com.docker.compose.image:sha256:106a32e814ce78fe9928ebf9086f2ec1e966e19be0061574de51f5a8e698fccd com.docker.compose.oneoff:False com.docker.compose.project:l05 com.docker.compose.project.config_files:C:\\Users\\guill\\Documents\\HEIG-VD\\S3\\DAI\\Labo\\L05\\compose.yml com.docker.compose.project.working_dir:C:\\Users\\guill\\Documents\\HEIG-VD\\S3\\DAI\\Labo\\L05 com.docker.compose.service:api com.docker.compose.version:2.21.0 image:l05-api name:l05-api-2 traefik.http.routers.api.rule:Host(`localhost`) && PathPrefix(`/api`) traefik.http.services.api.loadbalancer.sticky.cookie:true traefik.http.services.api.loadbalancer.sticky.cookie.name:RouteID]} Scope:local Time:1705255081 TimeNano:1705255081845113796}" providerName=docker
+time="2024-01-14T17:58:01Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:58:01Z" level=debug msg="Added outgoing tracing middleware api@internal" middlewareName=tracing middlewareType=TracingForwarder entryPointName=traefik routerName=api@internal
+time="2024-01-14T17:58:01Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" routerName=dashboard@internal middlewareName=tracing middlewareType=TracingForwarder entryPointName=traefik
+time="2024-01-14T17:58:01Z" level=debug msg="Creating middleware" middlewareType=StripPrefix entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:58:01Z" level=debug msg="Adding tracing to middleware" routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal entryPointName=traefik
+time="2024-01-14T17:58:01Z" level=debug msg="Creating middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal middlewareType=RedirectRegex
+time="2024-01-14T17:58:01Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" middlewareName=dashboard_redirect@internal middlewareType=RedirectRegex entryPointName=traefik routerName=dashboard@internal
+time="2024-01-14T17:58:01Z" level=debug msg="Adding tracing to middleware" routerName=dashboard@internal middlewareName=dashboard_redirect@internal entryPointName=traefik
+time="2024-01-14T17:58:01Z" level=debug msg="Creating middleware" entryPointName=traefik middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:58:01Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=webserver
+time="2024-01-14T17:58:01Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=api
+time="2024-01-14T17:58:01Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=postgresql-l05
+time="2024-01-14T17:58:01Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=traefik-l05
+time="2024-01-14T17:58:02Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" middlewareType=Pipelining routerName=traefik-l05@docker serviceName=traefik-l05 entryPointName=http middlewareName=pipelining
+time="2024-01-14T17:58:02Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=traefik-l05@docker serviceName=traefik-l05
+time="2024-01-14T17:58:02Z" level=debug msg="Creating server 0 http://172.21.0.5:80" entryPointName=http routerName=traefik-l05@docker serviceName=traefik-l05 serverName=0
+time="2024-01-14T17:58:02Z" level=debug msg="child http://172.21.0.5:80 now UP"
+time="2024-01-14T17:58:02Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware traefik-l05" entryPointName=http middlewareName=tracing middlewareType=TracingForwarder routerName=traefik-l05@docker
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" routerName=webserver@docker serviceName=webserver-l05 middlewareName=pipelining middlewareType=Pipelining entryPointName=http
+time="2024-01-14T17:58:02Z" level=debug msg="Creating load-balancer" routerName=webserver@docker serviceName=webserver-l05 entryPointName=http
+time="2024-01-14T17:58:02Z" level=debug msg="Creating server 0 http://172.21.0.2:80" serverName=0 serviceName=webserver-l05 entryPointName=http routerName=webserver@docker
+time="2024-01-14T17:58:02Z" level=debug msg="child http://172.21.0.2:80 now UP"
+time="2024-01-14T17:58:02Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:02Z" level=debug msg="Creating server 1 http://172.21.0.6:80" serviceName=webserver-l05 serverName=1 entryPointName=http routerName=webserver@docker
+time="2024-01-14T17:58:02Z" level=debug msg="child http://172.21.0.6:80 now UP"
+time="2024-01-14T17:58:02Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware webserver-l05" middlewareName=tracing middlewareType=TracingForwarder entryPointName=http routerName=webserver@docker
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" routerName=api@docker serviceName=api middlewareName=pipelining middlewareType=Pipelining entryPointName=http
+time="2024-01-14T17:58:02Z" level=debug msg="Creating load-balancer" routerName=api@docker serviceName=api entryPointName=http
+time="2024-01-14T17:58:02Z" level=debug msg="Sticky session cookie name: RouteID" entryPointName=http routerName=api@docker serviceName=api
+time="2024-01-14T17:58:02Z" level=debug msg="Creating server 0 http://172.21.0.3:3141" serverName=0 entryPointName=http routerName=api@docker serviceName=api
+time="2024-01-14T17:58:02Z" level=debug msg="child http://172.21.0.3:3141 now UP"
+time="2024-01-14T17:58:02Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware api" middlewareName=tracing middlewareType=TracingForwarder entryPointName=http routerName=api@docker
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" serviceName=postgresql-l05 entryPointName=http middlewareName=pipelining middlewareType=Pipelining routerName=postgresql-l05@docker
+time="2024-01-14T17:58:02Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=postgresql-l05@docker serviceName=postgresql-l05
+time="2024-01-14T17:58:02Z" level=debug msg="Creating server 0 http://172.21.0.4:5432" serviceName=postgresql-l05 serverName=0 entryPointName=http routerName=postgresql-l05@docker
+time="2024-01-14T17:58:02Z" level=debug msg="child http://172.21.0.4:5432 now UP"
+time="2024-01-14T17:58:02Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware postgresql-l05" middlewareType=TracingForwarder entryPointName=http routerName=postgresql-l05@docker middlewareName=tracing
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" entryPointName=http middlewareType=Recovery middlewareName=traefik-internal-recovery
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware api@internal" entryPointName=traefik routerName=api@internal middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:58:02Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" middlewareName=tracing middlewareType=TracingForwarder entryPointName=traefik routerName=dashboard@internal
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" middlewareType=StripPrefix entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:58:02Z" level=debug msg="Adding tracing to middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" middlewareName=dashboard_redirect@internal entryPointName=traefik routerName=dashboard@internal middlewareType=RedirectRegex
+time="2024-01-14T17:58:02Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" entryPointName=traefik routerName=dashboard@internal middlewareType=RedirectRegex middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:58:02Z" level=debug msg="Adding tracing to middleware" middlewareName=dashboard_redirect@internal entryPointName=traefik routerName=dashboard@internal
+time="2024-01-14T17:58:02Z" level=debug msg="Creating middleware" entryPointName=traefik middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:58:03Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"service\":\"api\",\"rule\":\"Host(`localhost`) \\u0026\\u0026 PathPrefix(`/api`)\"},\"postgresql-l05\":{\"service\":\"postgresql-l05\",\"rule\":\"Host(`postgresql-l05`)\"},\"traefik-l05\":{\"service\":\"traefik-l05\",\"rule\":\"Host(`traefik-l05`)\"},\"webserver\":{\"service\":\"webserver-l05\",\"rule\":\"Host(`localhost`)\"}},\"services\":{\"api\":{\"loadBalancer\":{\"sticky\":{\"cookie\":{\"name\":\"RouteID\"}},\"servers\":[{\"url\":\"http://172.21.0.7:3141\"},{\"url\":\"http://172.21.0.3:3141\"}],\"passHostHeader\":true}},\"postgresql-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.4:5432\"}],\"passHostHeader\":true}},\"traefik-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.5:80\"}],\"passHostHeader\":true}},\"webserver-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.21.0.2:80\"},{\"url\":\"http://172.21.0.6:80\"}],\"passHostHeader\":true}}}},\"tcp\":{},\"udp\":{}}" providerName=docker
+time="2024-01-14T17:58:03Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=api
+time="2024-01-14T17:58:03Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=postgresql-l05
+time="2024-01-14T17:58:03Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=traefik-l05
+time="2024-01-14T17:58:03Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=webserver
+time="2024-01-14T17:58:03Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" middlewareType=TracingForwarder entryPointName=traefik routerName=dashboard@internal middlewareName=tracing
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" middlewareType=StripPrefix entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:58:03Z" level=debug msg="Adding tracing to middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" routerName=dashboard@internal middlewareName=dashboard_redirect@internal middlewareType=RedirectRegex entryPointName=traefik
+time="2024-01-14T17:58:03Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal middlewareType=RedirectRegex
+time="2024-01-14T17:58:03Z" level=debug msg="Adding tracing to middleware" routerName=dashboard@internal middlewareName=dashboard_redirect@internal entryPointName=traefik
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware api@internal" middlewareName=tracing middlewareType=TracingForwarder entryPointName=traefik routerName=api@internal
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" entryPointName=traefik middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" middlewareName=pipelining middlewareType=Pipelining serviceName=webserver-l05 entryPointName=http routerName=webserver@docker
+time="2024-01-14T17:58:03Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=webserver@docker serviceName=webserver-l05
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 0 http://172.21.0.6:80" serverName=0 entryPointName=http routerName=webserver@docker serviceName=webserver-l05
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.6:80 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 1 http://172.21.0.2:80" entryPointName=http routerName=webserver@docker serviceName=webserver-l05 serverName=1
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.2:80 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware webserver-l05" middlewareName=tracing entryPointName=http routerName=webserver@docker middlewareType=TracingForwarder
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" routerName=api@docker serviceName=api middlewareName=pipelining middlewareType=Pipelining entryPointName=http
+time="2024-01-14T17:58:03Z" level=debug msg="Creating load-balancer" serviceName=api entryPointName=http routerName=api@docker
+time="2024-01-14T17:58:03Z" level=debug msg="Sticky session cookie name: RouteID" routerName=api@docker serviceName=api entryPointName=http
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 0 http://172.21.0.3:3141" entryPointName=http routerName=api@docker serviceName=api serverName=0
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.3:3141 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 1 http://172.21.0.7:3141" serviceName=api serverName=1 entryPointName=http routerName=api@docker
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.7:3141 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware api" middlewareType=TracingForwarder middlewareName=tracing entryPointName=http routerName=api@docker
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" entryPointName=http routerName=postgresql-l05@docker serviceName=postgresql-l05 middlewareName=pipelining middlewareType=Pipelining
+time="2024-01-14T17:58:03Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=postgresql-l05@docker serviceName=postgresql-l05
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 0 http://172.21.0.4:5432" routerName=postgresql-l05@docker serviceName=postgresql-l05 serverName=0 entryPointName=http
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.4:5432 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware postgresql-l05" entryPointName=http routerName=postgresql-l05@docker middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" serviceName=traefik-l05 entryPointName=http routerName=traefik-l05@docker middlewareName=pipelining middlewareType=Pipelining
+time="2024-01-14T17:58:03Z" level=debug msg="Creating load-balancer" routerName=traefik-l05@docker serviceName=traefik-l05 entryPointName=http
+time="2024-01-14T17:58:03Z" level=debug msg="Creating server 0 http://172.21.0.5:80" routerName=traefik-l05@docker serviceName=traefik-l05 serverName=0 entryPointName=http
+time="2024-01-14T17:58:03Z" level=debug msg="child http://172.21.0.5:80 now UP"
+time="2024-01-14T17:58:03Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:58:03Z" level=debug msg="Added outgoing tracing middleware traefik-l05" entryPointName=http routerName=traefik-l05@docker middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:58:03Z" level=debug msg="Creating middleware" entryPointName=http middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:58:37Z" level=info msg="I have to go..."
+time="2024-01-14T17:58:37Z" level=info msg="Stopping server gracefully"
+time="2024-01-14T17:58:37Z" level=debug msg="Waiting 10s seconds before killing connections." entryPointName=traefik
+time="2024-01-14T17:58:37Z" level=debug msg="Waiting 10s seconds before killing connections." entryPointName=http
+time="2024-01-14T17:58:37Z" level=error msg="accept tcp [::]:8080: use of closed network connection" entryPointName=traefik
+time="2024-01-14T17:58:37Z" level=error msg="accept tcp [::]:80: use of closed network connection" entryPointName=http
+time="2024-01-14T17:58:37Z" level=error msg="close tcp [::]:8080: use of closed network connection" entryPointName=traefik
+time="2024-01-14T17:58:37Z" level=error msg="close tcp [::]:80: use of closed network connection" entryPointName=http
+time="2024-01-14T17:58:37Z" level=debug msg="Entry point traefik closed" entryPointName=traefik
+time="2024-01-14T17:58:37Z" level=debug msg="Entry point http closed" entryPointName=http
+time="2024-01-14T17:58:37Z" level=info msg="Server stopped"
+time="2024-01-14T17:58:37Z" level=info msg="Shutting down"
+time="2024-01-14T17:59:07Z" level=info msg="Traefik version 2.10.7 built on 2023-12-06T15:54:59Z"
+time="2024-01-14T17:59:07Z" level=debug msg="Static configuration loaded {\"global\":{\"checkNewVersion\":true},\"serversTransport\":{\"maxIdleConnsPerHost\":200},\"entryPoints\":{\"http\":{\"address\":\":80\",\"transport\":{\"lifeCycle\":{\"graceTimeOut\":\"10s\"},\"respondingTimeouts\":{\"idleTimeout\":\"3m0s\"}},\"forwardedHeaders\":{},\"http\":{},\"http2\":{\"maxConcurrentStreams\":250},\"udp\":{\"timeout\":\"3s\"}},\"traefik\":{\"address\":\":8080\",\"transport\":{\"lifeCycle\":{\"graceTimeOut\":\"10s\"},\"respondingTimeouts\":{\"idleTimeout\":\"3m0s\"}},\"forwardedHeaders\":{},\"http\":{},\"http2\":{\"maxConcurrentStreams\":250},\"udp\":{\"timeout\":\"3s\"}}},\"providers\":{\"providersThrottleDuration\":\"2s\",\"docker\":{\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"exposedByDefault\":true,\"swarmModeRefreshSeconds\":\"15s\"}},\"api\":{\"insecure\":true,\"dashboard\":true},\"log\":{\"level\":\"DEBUG\",\"filePath\":\"/logs/traefik.log\",\"format\":\"common\"},\"accessLog\":{\"format\":\"common\",\"filters\":{},\"fields\":{\"defaultMode\":\"keep\",\"headers\":{\"defaultMode\":\"drop\"}}}}"
+time="2024-01-14T17:59:07Z" level=info msg="\nStats collection is disabled.\nHelp us improve Traefik by turning this feature on :)\nMore details on: https://doc.traefik.io/traefik/contributing/data-collection/\n"
+time="2024-01-14T17:59:07Z" level=info msg="Starting provider aggregator aggregator.ProviderAggregator"
+time="2024-01-14T17:59:07Z" level=debug msg="Starting TCP Server" entryPointName=traefik
+time="2024-01-14T17:59:07Z" level=info msg="Starting provider *traefik.Provider"
+time="2024-01-14T17:59:07Z" level=debug msg="*traefik.Provider provider configuration: {}"
+time="2024-01-14T17:59:07Z" level=debug msg="Starting TCP Server" entryPointName=http
+time="2024-01-14T17:59:07Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"entryPoints\":[\"traefik\"],\"service\":\"api@internal\",\"rule\":\"PathPrefix(`/api`)\",\"priority\":2147483646},\"dashboard\":{\"entryPoints\":[\"traefik\"],\"middlewares\":[\"dashboard_redirect@internal\",\"dashboard_stripprefix@internal\"],\"service\":\"dashboard@internal\",\"rule\":\"PathPrefix(`/`)\",\"priority\":2147483645}},\"services\":{\"api\":{},\"dashboard\":{},\"noop\":{}},\"middlewares\":{\"dashboard_redirect\":{\"redirectRegex\":{\"regex\":\"^(http:\\\\/\\\\/(\\\\[[\\\\w:.]+\\\\]|[\\\\w\\\\._-]+)(:\\\\d+)?)\\\\/$\",\"replacement\":\"${1}/dashboard/\",\"permanent\":true}},\"dashboard_stripprefix\":{\"stripPrefix\":{\"prefixes\":[\"/dashboard/\",\"/dashboard\"]}}},\"serversTransports\":{\"default\":{\"maxIdleConnsPerHost\":200}}},\"tcp\":{},\"udp\":{},\"tls\":{}}" providerName=internal
+time="2024-01-14T17:59:07Z" level=info msg="Starting provider *docker.Provider"
+time="2024-01-14T17:59:07Z" level=debug msg="*docker.Provider provider configuration: {\"watch\":true,\"endpoint\":\"unix:///var/run/docker.sock\",\"defaultRule\":\"Host(`{{ normalize .Name }}`)\",\"exposedByDefault\":true,\"swarmModeRefreshSeconds\":\"15s\"}"
+time="2024-01-14T17:59:07Z" level=info msg="Starting provider *acme.ChallengeTLSALPN"
+time="2024-01-14T17:59:07Z" level=debug msg="*acme.ChallengeTLSALPN provider configuration: {}"
+time="2024-01-14T17:59:07Z" level=debug msg="Provider connection established with docker 24.0.6 (API 1.43)" providerName=docker
+time="2024-01-14T17:59:07Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"entryPoints\":[\"http\",\"https\"],\"service\":\"api\",\"rule\":\"Host(`localhost`) \\u0026\\u0026 PathPrefix(`/api`)\",\"tls\":{}},\"postgresql-l05\":{\"service\":\"postgresql-l05\",\"rule\":\"Host(`postgresql-l05`)\"},\"traefik-l05\":{\"service\":\"traefik-l05\",\"rule\":\"Host(`traefik-l05`)\"},\"webserver\":{\"entryPoints\":[\"http\",\"https\"],\"service\":\"webserver-l05\",\"rule\":\"Host(`localhost`)\",\"tls\":{}}},\"services\":{\"api\":{\"loadBalancer\":{\"sticky\":{\"cookie\":{\"name\":\"RouteID\"}},\"servers\":[{\"url\":\"http://172.22.0.2:3141\"}],\"passHostHeader\":true}},\"postgresql-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.4:5432\"}],\"passHostHeader\":true}},\"traefik-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.5:80\"}],\"passHostHeader\":true}},\"webserver-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.6:80\"},{\"url\":\"http://172.22.0.3:80\"}],\"passHostHeader\":true}}}},\"tcp\":{},\"udp\":{}}" providerName=docker
+time="2024-01-14T17:59:07Z" level=debug msg="Provider event received {Status:start ID:598f6aa755f217d0e4d954ab3c13329b17644fd2b549374af6287e1aaa74e2e5 From:l05-api Type:container Action:start Actor:{ID:598f6aa755f217d0e4d954ab3c13329b17644fd2b549374af6287e1aaa74e2e5 Attributes:map[com.docker.compose.config-hash:461f61f117081cd5f02196462472e92c50d5e3f68f45fb8bf44d049717361649 com.docker.compose.container-number:1 com.docker.compose.depends_on: com.docker.compose.image:sha256:106a32e814ce78fe9928ebf9086f2ec1e966e19be0061574de51f5a8e698fccd com.docker.compose.oneoff:False com.docker.compose.project:l05 com.docker.compose.project.config_files:C:\\Users\\guill\\Documents\\HEIG-VD\\S3\\DAI\\Labo\\L05\\compose.yml com.docker.compose.project.working_dir:C:\\Users\\guill\\Documents\\HEIG-VD\\S3\\DAI\\Labo\\L05 com.docker.compose.service:api com.docker.compose.version:2.21.0 image:l05-api name:l05-api-1 traefik.http.routers.api.entrypoints:http,https traefik.http.routers.api.rule:Host(`localhost`) && PathPrefix(`/api`) traefik.http.routers.api.tls:true traefik.http.services.api.loadbalancer.sticky.cookie:true traefik.http.services.api.loadbalancer.sticky.cookie.name:RouteID]} Scope:local Time:1705255147 TimeNano:1705255147583163448}" providerName=docker
+time="2024-01-14T17:59:08Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" entryPointName=traefik routerName=dashboard@internal middlewareType=TracingForwarder middlewareName=tracing
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareType=StripPrefix entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Adding tracing to middleware" middlewareName=dashboard_stripprefix@internal entryPointName=traefik routerName=dashboard@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareName=dashboard_redirect@internal entryPointName=traefik routerName=dashboard@internal middlewareType=RedirectRegex
+time="2024-01-14T17:59:08Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" routerName=dashboard@internal middlewareType=RedirectRegex middlewareName=dashboard_redirect@internal entryPointName=traefik
+time="2024-01-14T17:59:08Z" level=debug msg="Adding tracing to middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware api@internal" routerName=api@internal middlewareName=tracing middlewareType=TracingForwarder entryPointName=traefik
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareType=Recovery entryPointName=traefik middlewareName=traefik-internal-recovery
+time="2024-01-14T17:59:08Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=postgresql-l05
+time="2024-01-14T17:59:08Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=traefik-l05
+time="2024-01-14T17:59:08Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareName=pipelining middlewareType=Pipelining entryPointName=http routerName=postgresql-l05@docker serviceName=postgresql-l05
+time="2024-01-14T17:59:08Z" level=debug msg="Creating load-balancer" serviceName=postgresql-l05 entryPointName=http routerName=postgresql-l05@docker
+time="2024-01-14T17:59:08Z" level=debug msg="Creating server 0 http://172.22.0.4:5432" serverName=0 routerName=postgresql-l05@docker serviceName=postgresql-l05 entryPointName=http
+time="2024-01-14T17:59:08Z" level=debug msg="child http://172.22.0.4:5432 now UP"
+time="2024-01-14T17:59:08Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware postgresql-l05" entryPointName=http routerName=postgresql-l05@docker middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareName=pipelining middlewareType=Pipelining routerName=traefik-l05@docker serviceName=traefik-l05 entryPointName=http
+time="2024-01-14T17:59:08Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=traefik-l05@docker serviceName=traefik-l05
+time="2024-01-14T17:59:08Z" level=debug msg="Creating server 0 http://172.22.0.5:80" serverName=0 entryPointName=http routerName=traefik-l05@docker serviceName=traefik-l05
+time="2024-01-14T17:59:08Z" level=debug msg="child http://172.22.0.5:80 now UP"
+time="2024-01-14T17:59:08Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware traefik-l05" routerName=traefik-l05@docker middlewareName=tracing middlewareType=TracingForwarder entryPointName=http
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareName=traefik-internal-recovery middlewareType=Recovery entryPointName=http
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware api@internal" entryPointName=traefik middlewareName=tracing middlewareType=TracingForwarder routerName=api@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" entryPointName=traefik middlewareType=TracingForwarder middlewareName=tracing routerName=dashboard@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal middlewareType=StripPrefix entryPointName=traefik
+time="2024-01-14T17:59:08Z" level=debug msg="Adding tracing to middleware" middlewareName=dashboard_stripprefix@internal entryPointName=traefik routerName=dashboard@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareType=RedirectRegex entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" middlewareType=RedirectRegex entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:59:08Z" level=debug msg="Adding tracing to middleware" routerName=dashboard@internal middlewareName=dashboard_redirect@internal entryPointName=traefik
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareType=Recovery entryPointName=traefik middlewareName=traefik-internal-recovery
+time="2024-01-14T17:59:08Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=api@docker entryPointName=https
+time="2024-01-14T17:59:08Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=webserver@docker entryPointName=https
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" middlewareType=Pipelining serviceName=api entryPointName=http routerName=api@docker middlewareName=pipelining
+time="2024-01-14T17:59:08Z" level=debug msg="Creating load-balancer" serviceName=api entryPointName=http routerName=api@docker
+time="2024-01-14T17:59:08Z" level=debug msg="Sticky session cookie name: RouteID" entryPointName=http routerName=api@docker serviceName=api
+time="2024-01-14T17:59:08Z" level=debug msg="Creating server 0 http://172.22.0.2:3141" routerName=api@docker serviceName=api entryPointName=http serverName=0
+time="2024-01-14T17:59:08Z" level=debug msg="child http://172.22.0.2:3141 now UP"
+time="2024-01-14T17:59:08Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware api" entryPointName=http routerName=api@docker middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" entryPointName=http routerName=webserver@docker serviceName=webserver-l05 middlewareName=pipelining middlewareType=Pipelining
+time="2024-01-14T17:59:08Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=webserver@docker serviceName=webserver-l05
+time="2024-01-14T17:59:08Z" level=debug msg="Creating server 0 http://172.22.0.3:80" serviceName=webserver-l05 serverName=0 entryPointName=http routerName=webserver@docker
+time="2024-01-14T17:59:08Z" level=debug msg="child http://172.22.0.3:80 now UP"
+time="2024-01-14T17:59:08Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:08Z" level=debug msg="Creating server 1 http://172.22.0.6:80" routerName=webserver@docker serviceName=webserver-l05 serverName=1 entryPointName=http
+time="2024-01-14T17:59:08Z" level=debug msg="child http://172.22.0.6:80 now UP"
+time="2024-01-14T17:59:08Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:59:08Z" level=debug msg="Added outgoing tracing middleware webserver-l05" entryPointName=http middlewareType=TracingForwarder middlewareName=tracing routerName=webserver@docker
+time="2024-01-14T17:59:08Z" level=debug msg="Creating middleware" entryPointName=http middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:59:08Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=api@docker entryPointName=https
+time="2024-01-14T17:59:08Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=webserver@docker entryPointName=https
+time="2024-01-14T17:59:08Z" level=debug msg="Adding route for localhost with TLS options default" entryPointName=http
+time="2024-01-14T17:59:09Z" level=debug msg="Configuration received: {\"http\":{\"routers\":{\"api\":{\"entryPoints\":[\"http\",\"https\"],\"service\":\"api\",\"rule\":\"Host(`localhost`) \\u0026\\u0026 PathPrefix(`/api`)\",\"tls\":{}},\"postgresql-l05\":{\"service\":\"postgresql-l05\",\"rule\":\"Host(`postgresql-l05`)\"},\"traefik-l05\":{\"service\":\"traefik-l05\",\"rule\":\"Host(`traefik-l05`)\"},\"webserver\":{\"entryPoints\":[\"http\",\"https\"],\"service\":\"webserver-l05\",\"rule\":\"Host(`localhost`)\",\"tls\":{}}},\"services\":{\"api\":{\"loadBalancer\":{\"sticky\":{\"cookie\":{\"name\":\"RouteID\"}},\"servers\":[{\"url\":\"http://172.22.0.7:3141\"},{\"url\":\"http://172.22.0.2:3141\"}],\"passHostHeader\":true}},\"postgresql-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.4:5432\"}],\"passHostHeader\":true}},\"traefik-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.5:80\"}],\"passHostHeader\":true}},\"webserver-l05\":{\"loadBalancer\":{\"servers\":[{\"url\":\"http://172.22.0.6:80\"},{\"url\":\"http://172.22.0.3:80\"}],\"passHostHeader\":true}}}},\"tcp\":{},\"udp\":{}}" providerName=docker
+time="2024-01-14T17:59:09Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=traefik-l05
+time="2024-01-14T17:59:09Z" level=debug msg="No entryPoint defined for this router, using the default one(s) instead: [http]" routerName=postgresql-l05
+time="2024-01-14T17:59:09Z" level=debug msg="No default certificate, fallback to the internal generated certificate" tlsStoreName=default
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" serviceName=traefik-l05 middlewareName=pipelining middlewareType=Pipelining routerName=traefik-l05@docker entryPointName=http
+time="2024-01-14T17:59:09Z" level=debug msg="Creating load-balancer" entryPointName=http serviceName=traefik-l05 routerName=traefik-l05@docker
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 0 http://172.22.0.5:80" serviceName=traefik-l05 serverName=0 routerName=traefik-l05@docker entryPointName=http
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.5:80 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware traefik-l05" middlewareName=tracing middlewareType=TracingForwarder entryPointName=http routerName=traefik-l05@docker
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" middlewareName=pipelining middlewareType=Pipelining serviceName=postgresql-l05 routerName=postgresql-l05@docker entryPointName=http
+time="2024-01-14T17:59:09Z" level=debug msg="Creating load-balancer" routerName=postgresql-l05@docker entryPointName=http serviceName=postgresql-l05
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 0 http://172.22.0.4:5432" serviceName=postgresql-l05 serverName=0 routerName=postgresql-l05@docker entryPointName=http
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.4:5432 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware postgresql-l05" entryPointName=http routerName=postgresql-l05@docker middlewareType=TracingForwarder middlewareName=tracing
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" entryPointName=http middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware dashboard@internal" entryPointName=traefik routerName=dashboard@internal middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal middlewareType=StripPrefix
+time="2024-01-14T17:59:09Z" level=debug msg="Adding tracing to middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_stripprefix@internal
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" routerName=dashboard@internal middlewareName=dashboard_redirect@internal middlewareType=RedirectRegex entryPointName=traefik
+time="2024-01-14T17:59:09Z" level=debug msg="Setting up redirection from ^(http:\\/\\/(\\[[\\w:.]+\\]|[\\w\\._-]+)(:\\d+)?)\\/$ to ${1}/dashboard/" middlewareType=RedirectRegex entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:59:09Z" level=debug msg="Adding tracing to middleware" entryPointName=traefik routerName=dashboard@internal middlewareName=dashboard_redirect@internal
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware api@internal" entryPointName=traefik routerName=api@internal middlewareType=TracingForwarder middlewareName=tracing
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" entryPointName=traefik middlewareName=traefik-internal-recovery middlewareType=Recovery
+time="2024-01-14T17:59:09Z" level=error msg="entryPoint \"https\" doesn't exist" entryPointName=https routerName=webserver@docker
+time="2024-01-14T17:59:09Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=api@docker entryPointName=https
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" entryPointName=http serviceName=webserver-l05 middlewareName=pipelining middlewareType=Pipelining routerName=webserver@docker
+time="2024-01-14T17:59:09Z" level=debug msg="Creating load-balancer" entryPointName=http serviceName=webserver-l05 routerName=webserver@docker
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 0 http://172.22.0.3:80" routerName=webserver@docker entryPointName=http serviceName=webserver-l05 serverName=0
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.3:80 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 1 http://172.22.0.6:80" entryPointName=http serviceName=webserver-l05 serverName=1 routerName=webserver@docker
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.6:80 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware webserver-l05" middlewareType=TracingForwarder entryPointName=http routerName=webserver@docker middlewareName=tracing
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" middlewareType=Pipelining entryPointName=http routerName=api@docker serviceName=api middlewareName=pipelining
+time="2024-01-14T17:59:09Z" level=debug msg="Creating load-balancer" entryPointName=http routerName=api@docker serviceName=api
+time="2024-01-14T17:59:09Z" level=debug msg="Sticky session cookie name: RouteID" serviceName=api entryPointName=http routerName=api@docker
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 0 http://172.22.0.2:3141" entryPointName=http routerName=api@docker serviceName=api serverName=0
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.2:3141 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Propagating new UP status"
+time="2024-01-14T17:59:09Z" level=debug msg="Creating server 1 http://172.22.0.7:3141" serviceName=api serverName=1 entryPointName=http routerName=api@docker
+time="2024-01-14T17:59:09Z" level=debug msg="child http://172.22.0.7:3141 now UP"
+time="2024-01-14T17:59:09Z" level=debug msg="Still UP, no need to propagate"
+time="2024-01-14T17:59:09Z" level=debug msg="Added outgoing tracing middleware api" entryPointName=http routerName=api@docker middlewareName=tracing middlewareType=TracingForwarder
+time="2024-01-14T17:59:09Z" level=debug msg="Creating middleware" middlewareType=Recovery entryPointName=http middlewareName=traefik-internal-recovery
+time="2024-01-14T17:59:09Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=webserver@docker entryPointName=https
+time="2024-01-14T17:59:09Z" level=error msg="entryPoint \"https\" doesn't exist" routerName=api@docker entryPointName=https
+time="2024-01-14T17:59:09Z" level=debug msg="Adding route for localhost with TLS options default" entryPointName=http
+time="2024-01-14T18:00:02Z" level=info msg="I have to go..."
+time="2024-01-14T18:00:02Z" level=info msg="Stopping server gracefully"
+time="2024-01-14T18:00:02Z" level=debug msg="Waiting 10s seconds before killing connections." entryPointName=traefik
+time="2024-01-14T18:00:02Z" level=debug msg="Waiting 10s seconds before killing connections." entryPointName=http
+time="2024-01-14T18:00:02Z" level=error msg="accept tcp [::]:80: use of closed network connection" entryPointName=http
+time="2024-01-14T18:00:02Z" level=error msg="accept tcp [::]:8080: use of closed network connection" entryPointName=traefik
+time="2024-01-14T18:00:02Z" level=error msg="close tcp [::]:8080: use of closed network connection" entryPointName=traefik
+time="2024-01-14T18:00:02Z" level=error msg="close tcp [::]:80: use of closed network connection" entryPointName=http
+time="2024-01-14T18:00:03Z" level=debug msg="Entry point traefik closed" entryPointName=traefik
+time="2024-01-14T18:00:03Z" level=debug msg="Entry point http closed" entryPointName=http
+time="2024-01-14T18:00:03Z" level=info msg="Server stopped"
+time="2024-01-14T18:00:03Z" level=info msg="Shutting down"

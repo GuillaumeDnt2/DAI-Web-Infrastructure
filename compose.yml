@@ -21,6 +21,8 @@ services:
       - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
       - traefik.http.services.api.loadbalancer.sticky.cookie=true
       - traefik.http.services.api.loadbalancer.sticky.cookie.name=RouteID
+      - traefik.http.routers.api.entrypoints=http,https
+      - traefik.http.routers.api.tls=true
     
    
    
@@ -33,6 +35,8 @@ services:
       replicas: 2
     labels:
       - traefik.http.routers.webserver.rule=Host(`localhost`)
+      - traefik.http.routers.webserver.entrypoints=http,https
+      - traefik.http.routers.webserver.tls=true
     
     
 
@@ -47,8 +51,10 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock #Docker socket
       - ./logs/:/logs/
-      #TODO : certificate TLS
+      - ./certificates:/etc/traefik/certificates
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80"
+      - "443:443"
       - "3141:3141"
       - "8080:8080"
