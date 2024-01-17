@@ -184,7 +184,7 @@ La 1ère ligne indique qu'on active les sticky sessions, avec Traefik les sticky
 La 2e ligne indique le nom du cookie et il ne reste plus rien d'autre à faire, Traefik s'occupe de tout.
 
 ### Logs avec Traefik
-Afin de prouver que les sticky session fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
+Afin de prouver que les sticky sessions fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
 Il suffit d'ajouter le paramètre suivant dans le fichier Traefik.yaml :
 ```
 accessLog:
