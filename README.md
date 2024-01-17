@@ -47,7 +47,7 @@ Cette API nous permet de gérer une liste de pays ainsi que leurs informations (
 L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
 Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)). 
 
-## Package Java avec Maven
+### Package Java avec Maven
 Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
 ```
 <dependencies>
