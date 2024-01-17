@@ -47,10 +47,27 @@ Cette API nous permet de gérer une liste de pays ainsi que leurs informations (
 L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
 Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)).
 
-Pour stocker les données, nous avons ajouté une base de données Postgresql ave qui l'API communique afin de modifier ou de modifier les informations.
+Pour stocker les données, nous avons ajouté une base de données Postgresql ave qui l'API communique afin de modifier ou de consulter les informations.
+
+### Base de données Postgresql
+La base de données contient une unique table country dans le schéma Countries avec les colonnes `name`, `capital` et `population`.
+
+Pour utiliser Postgresql avec docker, il faut, en plus des champs habituels, ajouter des variables d'environement qui serviront à créer un utilisateur avec son mot de passe afin de pouvoir se connecter ainsi que le nom de la base de donnée principale.
+```
+db:
+    build:
+      context: ./Database
+    container_name: db
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=apiUser
+      - POSTGRES_PASSWORD=1_L0VE_D@1
+      - POSTGRES_DB=countryDB
+```
 
 ### Package Java avec Maven
-Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
+Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin et au connecteur Postgresql dans le fichier pom.xml :
 ```
 <dependencies>
         <dependency>
@@ -58,11 +75,16 @@ Pour faire un nouveau package Java de cet API nous devons ajouter une dépendanc
             <artifactId>javalin-bundle</artifactId>
             <version>5.6.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.1</version>
+		    </dependency>
 </dependencies>
 ```
 
 
-## Exemples de commandes avec Bruno :
+### Exemples de commandes avec Bruno :
 Ajout d'un pays :
 
 <img width="355" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/56c62a4b-100f-48c1-b06b-b1792bdd28c8"> 
