@@ -45,7 +45,9 @@ Pour l'instant docker compose va démarrer l'image du site web statique et bind 
 Pour faire une API HTTP nous avons développé un petit programme Java utilisant la librairie Javalin. 
 Cette API nous permet de gérer une liste de pays ainsi que leurs informations (capitales et population). 
 L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
-Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)). 
+Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)).
+
+Pour stocker les données, nous avons ajouté une base de données Postgresql ave qui l'API communique afin de modifier ou de modifier les informations.
 
 ## Package Java avec Maven
 Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
@@ -60,7 +62,7 @@ Pour faire un nouveau package Java de cet API nous devons ajouter une dépendanc
 ```
 
 
-### Exemples de commandes avec Bruno :
+## Exemples de commandes avec Bruno :
 Ajout d'un pays :
 
 <img width="355" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/113915093/56c62a4b-100f-48c1-b06b-b1792bdd28c8"> 
