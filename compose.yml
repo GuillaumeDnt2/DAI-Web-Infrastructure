@@ -1,14 +1,12 @@
 services:
-  postgresql:
+  db:
     build:
       context: ./Database
+    container_name: l05-db-1
     environment:
       - POSTGRES_USER=apiUser
       - POSTGRES_PASSWORD=1_L0VE_D@1
       - POSTGRES_DB=countryDB
-    ports:
-      - 5432:5432
-
 
   api:
     build:

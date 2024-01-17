@@ -4,7 +4,7 @@ public class Country {
     public String name;
     public String capital;
     public int    population;
-    public String flagPath; //Si on a du temps
+    private String flagPath; //Si on a du temps
 
     public Country(){}
 
