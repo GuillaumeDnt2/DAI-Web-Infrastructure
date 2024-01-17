@@ -1,2 +1,5 @@
-HttpAPI/target
+HttpAPI/target/archive-tmp
+HttpAPI/target/classes
+HttpAPI/target/annotations
+HttpAPI/target/default-compile
 .vscode
