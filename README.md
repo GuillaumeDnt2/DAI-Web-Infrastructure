@@ -2,7 +2,7 @@
 ## Présentation
 Ce projet consiste en une infrastructure web implémentée à l'aide de Docker Compose. Cette infrastructure est composée d'un ou plusieurs serveurs web statique, une API CRUD HTTP avec sa base de donnée Postgresql ainsi qu'un reverse proxy Traefik. Ce qui suit explique comment nous avons construit cette infrastructure dans l'ordre dans laquelle nous l'avons réalisée.
 
-## Server web Ngninx
+## Server web Nginx
 
 ### Dockerfile
 Pour créer notre image docker, nous avons repris la dernière image officielle de nginx et copié notre site web dans le dossier /www et le fichier de configuration nginx.
