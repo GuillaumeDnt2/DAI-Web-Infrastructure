@@ -140,13 +140,14 @@ Exemple de résultat avec la commande GET ci dessus :
       - --providers.docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80"
       - "3141:3141"
       - "8080:8080"
 ```
 
-Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik.
+Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik. Le fichier *traefik.yaml* contient la configuation et sera utilisé plus tard pour l'ajout de log et de SSL/TLS.
 > [!NOTE]
 > Il faut monter un volume de Traefik sur le socket Docker pour qu'il ait accès aux containers
 
@@ -240,6 +241,33 @@ Les sticky sessions par cookie sont maintenant activées pour l'API HTTP. Un cli
 On remarque dans les logs que l'adresse IP de destination n'a pas changée, donc la requête HTTP a toujours été redirigée vers le même serveur. 
 
 ## Sécurisation TLS
+Pour sécuriser les connexions à notre infrastructure web, nous avons mis en place TLS afin d'utiliser https. Pour cela, nous avons besoin d'un certificat et d'une clé que nous avons généré grâce à openssl et la commande suivante :
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+```
+On a ensuite monté un volume contenant les deux fichiers (la clé *key.pem* et le certificat *cert.pem*) dans le container de traefik.
+```
+- ./certificates:/etc/traefik/certificates
+``` 
+On va devoir ensuite configurer traefik pour activer tls et lui indiquer où se trouvent la clé et le certificat. Pour cela, il faut ajouter au fichier *traefik.yaml* le contenu suivant :
+```
+entryPoints:
+  http:
+    address: ":80"
+
+  https:
+    address: ":443"
+
+tls:
+  certificates:
+    - certFile: /etc/traefik/certificates/cert.pem
+      keyFile: /etc/traefik/certificates/key.pem
+```
+Il y a donc deux choses à configurer, les **entryPoints** qui sont les ports sur lesquels on va pouvoir se connecter et **tls** avec le chemain du certificat et de la clé (précédement monté dans un volume de traefik). Et il ne faut pas oublié d'ajouter également le port 443 au container traefik dans le fichier docker compose (sinon on ne pourra pas l'attteindre depuis l'extérieur).
+
+Désormais, il faut utiliser **https://** dans l'url pour se connecter au serveur web static ou à l'api.
+> [!IMPORTANT]
+> Comme le certificat n'est pas fourni par un CA (certificate authority), lors d'une connection le navigateur nous le signalera avec un avertissement mais il faut l'ignorer dans notre cas.
 
 ## Interface de gestion de l'infrastructure
 Nous avons décidé d'utiliser une solution existante pour gérer une infrastructure sur Docker.
