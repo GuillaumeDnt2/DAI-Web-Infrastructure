@@ -2,7 +2,9 @@ services:
   db:
     build:
       context: ./Database
-    container_name: l05-db-1
+    container_name: db
+    expose:
+      - "5432"
     environment:
       - POSTGRES_USER=apiUser
       - POSTGRES_PASSWORD=1_L0VE_D@1

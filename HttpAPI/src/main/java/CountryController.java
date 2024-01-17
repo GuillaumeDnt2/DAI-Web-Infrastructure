@@ -3,10 +3,9 @@ import io.javalin.http.Context;
 import java.sql.*;
 
 public class CountryController {
-    //private ConcurrentHashMap<String, Country> countries = new ConcurrentHashMap<>();
 
     private Connection connect;
-    final static String dbUrl = "jdbc:postgresql://l05-db-1:5432/countryDB";
+    final static String dbUrl = "jdbc:postgresql://db:5432/countryDB";
     final static String login = "apiUser";
     final static String psw   = "1_L0VE_D@1";
 
@@ -68,7 +67,7 @@ public class CountryController {
             statement.setString(1, country.name);
             statement.setString(2, country.capital);
             statement.setInt(3, country.population);
-            statement.executeQuery();
+            statement.executeUpdate();
             ctx.status(201);
         } catch (Exception e){
             System.out.println(e.getMessage());
@@ -79,9 +78,9 @@ public class CountryController {
     public void delete(Context ctx){
         String cntryName = ctx.pathParam("name");
         try {
-            var statement = connect.prepareStatement("DELETE * FROM country WHERE name=?");
+            var statement = connect.prepareStatement("DELETE FROM country WHERE name=?");
             statement.setString(1, cntryName);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ctx.status(500);
@@ -97,7 +96,7 @@ public class CountryController {
             statement.setString(2, country.capital);
             statement.setInt(3, country.population);
             statement.setString(4, cntryName);
-            statement.executeQuery();
+            statement.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             ctx.status(500);
