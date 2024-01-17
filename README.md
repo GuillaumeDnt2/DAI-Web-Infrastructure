@@ -2,7 +2,7 @@
 ## Présentation
 Ce projet consiste en une infrastructure web implémentée à l'aide de Docker Compose. Cette infrastructure est composée d'un ou plusieurs serveurs web statique, une API CRUD HTTP avec sa base de donnée Postgresql ainsi qu'un reverse proxy Traefik. Ce qui suit explique comment nous avons construit cette infrastructure dans l'ordre dans laquelle nous l'avons réalisée.
 
-## Server web Ngninx
+## Server web Nginx
 
 ### Dockerfile
 Pour créer notre image docker, nous avons repris la dernière image officielle de nginx et copié notre site web dans le dossier /www et le fichier de configuration nginx.
@@ -49,7 +49,7 @@ Pour correctement utiliser l'API il est conseillé de faire les commandes avec u
 
 Pour stocker les données, nous avons ajouté une base de données Postgresql ave qui l'API communique afin de modifier ou de modifier les informations.
 
-## Package Java avec Maven
+### Package Java avec Maven
 Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
 ```
 <dependencies>
@@ -184,6 +184,38 @@ Il faut ajouter deux nouvelles lignes dans les labels de l'API :
 ```
 La 1ère ligne indique qu'on active les sticky sessions, avec Traefik les sticky sessions sont réalisées par des cookies ajoutés dans les headers HTTP.
 La 2e ligne indique le nom du cookie et il ne reste plus rien d'autre à faire, Traefik s'occupe de tout.
+
+### Logs avec Traefik
+Afin de prouver que les sticky sessions fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
+Il suffit d'ajouter le paramètre suivant dans le fichier Traefik.yaml :
+```
+accessLog:
+  filePath: "/logs/access.log"
+
+```
+Maintenant chaque connection passant par le reverse proxy sera affichée dans ce fichier de log. 
+
+#### Preuve des sticky sessions
+
+**Accès sur le site web statique**
+```
+172.22.0.1 - - [17/Jan/2024:16:48:14 +0000] "GET / HTTP/2.0" 200 9618 "-" "-" 67 "webserver@docker" "http://172.22.0.3:80" 0ms
+172.22.0.1 - - [17/Jan/2024:16:49:05 +0000] "GET / HTTP/2.0" 200 9618 "-" "-" 71 "webserver@docker" "http://172.22.0.8:80" 1ms
+172.22.0.1 - - [17/Jan/2024:16:49:06 +0000] "GET / HTTP/2.0" 200 9618 "-" "-" 75 "webserver@docker" "http://172.22.0.11:80" 0ms
+```
+Comme les sticky sessions ne sont pas activées pour le serveur web, quand on se connecte plusieurs fois sur le site web le reverse proxy va rediriger la requête sur des serveurs différents.
+L'adresse IP du serveur de destination est différente pour chaque requête.
+
+
+**Accès sur l'API**
+```
+172.22.0.1 - - [17/Jan/2024:16:45:50 +0000] "GET /api/country HTTP/2.0" 200 262 "-" "-" 24 "api@docker" "http://172.22.0.2:3141" 6ms
+172.22.0.1 - - [17/Jan/2024:16:45:51 +0000] "GET /api/country HTTP/2.0" 200 262 "-" "-" 25 "api@docker" "http://172.22.0.2:3141" 2ms
+172.22.0.1 - - [17/Jan/2024:16:46:01 +0000] "GET /api/country HTTP/2.0" 200 262 "-" "-" 26 "api@docker" "http://172.22.0.2:3141" 2ms
+172.22.0.1 - - [17/Jan/2024:16:46:01 +0000] "GET /api/country HTTP/2.0" 200 262 "-" "-" 27 "api@docker" "http://172.22.0.2:3141" 1ms
+```
+Les sticky sessions par cookie sont maintenant activées pour l'API HTTP. Un client est censé converser avec la même instance du serveur HTTP.
+On remarque dans les logs que l'adresse IP de destination n'a pas changée, donc la requête HTTP a toujours été redirigée vers le même serveur. 
 
 ## Sécurisation TLS
 
