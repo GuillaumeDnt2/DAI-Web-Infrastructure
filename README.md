@@ -51,7 +51,14 @@ Pour stocker les données, nous avons ajouté une base de données Postgresql av
 
 ### Base de données Postgresql
 La base de données contient une unique table country dans le schéma Countries avec les colonnes `name`, `capital` et `population`.
-
+```
+CREATE TABLE country(
+    name VARCHAR(50),
+    capital VARCHAR(50),
+    population INTEGER,
+    PRIMARY KEY(name)
+);
+```
 Pour utiliser Postgresql avec docker, il faut, en plus des champs habituels, ajouter des variables d'environement qui serviront à créer un utilisateur avec son mot de passe afin de pouvoir se connecter ainsi que le nom de la base de donnée principale.
 ```
 db:
@@ -111,20 +118,17 @@ Exemple de résultat avec la commande GET ci dessus :
   "Switzerland": {
     "name": "Switzerland",
     "capital": "Lausanne",
-    "population": 8796669,
-    "flagPath": null
+    "population": 8796669
   },
   "Germany": {
     "name": "Germany",
     "capital": "Berlin",
-    "population": 832994633,
-    "flagPath": null
+    "population": 832994633
   },
   "India": {
     "name": "India",
     "capital": "New Delhi",
-    "population": 1428627663,
-    "flagPath": null
+    "population": 1428627663
   }
 }
 ```
@@ -266,6 +270,9 @@ tls:
 Il y a donc deux choses à configurer, les **entryPoints** qui sont les ports sur lesquels on va pouvoir se connecter et **tls** avec le chemain du certificat et de la clé (précédement monté dans un volume de traefik). Et il ne faut pas oublié d'ajouter également le port 443 au container traefik dans le fichier docker compose (sinon on ne pourra pas l'attteindre depuis l'extérieur).
 
 Désormais, il faut utiliser **https://** dans l'url pour se connecter au serveur web static ou à l'api.
+
+<img width="200" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/114154825/c98c842e-98a5-44ed-80dd-1e3135700abf)"> 
+
 > [!IMPORTANT]
 > Comme le certificat n'est pas fourni par un CA (certificate authority), lors d'une connection le navigateur nous le signalera avec un avertissement mais il faut l'ignorer dans notre cas.
 
