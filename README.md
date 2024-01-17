@@ -2,7 +2,7 @@
 ## Présentation
 Ce projet consiste en une infrastructure web implémentée à l'aide de Docker Compose. Cette infrastructure est composée d'un ou plusieurs serveurs web statique, une API CRUD HTTP avec sa base de donnée Postgresql ainsi qu'un reverse proxy Traefik. Ce qui suit explique comment nous avons construit cette infrastructure dans l'ordre dans laquelle nous l'avons réalisée.
 
-## Server web Ngninx
+## Server web Nginx
 
 ### Dockerfile
 Pour créer notre image docker, nous avons repris la dernière image officielle de nginx et copié notre site web dans le dossier /www et le fichier de configuration nginx.
@@ -45,10 +45,36 @@ Pour l'instant docker compose va démarrer l'image du site web statique et bind 
 Pour faire une API HTTP nous avons développé un petit programme Java utilisant la librairie Javalin. 
 Cette API nous permet de gérer une liste de pays ainsi que leurs informations (capitales et population). 
 L'API propose toutes les opérations CRUD (Create-Read-Update-Delete).
-Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)). 
+Pour correctement utiliser l'API il est conseillé de faire les commandes avec un client API (comme [Bruno](https://www.usebruno.com/)).
 
-## Package Java avec Maven
-Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin dans le fichier pom.xml :
+Pour stocker les données, nous avons ajouté une base de données Postgresql ave qui l'API communique afin de modifier ou de consulter les informations.
+
+### Base de données Postgresql
+La base de données contient une unique table country dans le schéma Countries avec les colonnes `name`, `capital` et `population`.
+```
+CREATE TABLE country(
+    name VARCHAR(50),
+    capital VARCHAR(50),
+    population INTEGER,
+    PRIMARY KEY(name)
+);
+```
+Pour utiliser Postgresql avec docker, il faut, en plus des champs habituels, ajouter des variables d'environement qui serviront à créer un utilisateur avec son mot de passe afin de pouvoir se connecter ainsi que le nom de la base de donnée principale.
+```
+db:
+    build:
+      context: ./Database
+    container_name: db
+    expose:
+      - "5432"
+    environment:
+      - POSTGRES_USER=apiUser
+      - POSTGRES_PASSWORD=1_L0VE_D@1
+      - POSTGRES_DB=countryDB
+```
+
+### Package Java avec Maven
+Pour faire un nouveau package Java de cet API nous devons ajouter une dépendance à Javalin et au connecteur Postgresql dans le fichier pom.xml :
 ```
 <dependencies>
         <dependency>
@@ -56,6 +82,11 @@ Pour faire un nouveau package Java de cet API nous devons ajouter une dépendanc
             <artifactId>javalin-bundle</artifactId>
             <version>5.6.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.1</version>
+		    </dependency>
 </dependencies>
 ```
 
@@ -87,20 +118,17 @@ Exemple de résultat avec la commande GET ci dessus :
   "Switzerland": {
     "name": "Switzerland",
     "capital": "Lausanne",
-    "population": 8796669,
-    "flagPath": null
+    "population": 8796669
   },
   "Germany": {
     "name": "Germany",
     "capital": "Berlin",
-    "population": 832994633,
-    "flagPath": null
+    "population": 832994633
   },
   "India": {
     "name": "India",
     "capital": "New Delhi",
-    "population": 1428627663,
-    "flagPath": null
+    "population": 1428627663
   }
 }
 ```
@@ -116,13 +144,14 @@ Exemple de résultat avec la commande GET ci dessus :
       - --providers.docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80"
       - "3141:3141"
       - "8080:8080"
 ```
 
-Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik.
+Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour l'API et le port 8080 pour le dashboard Traefik. Le fichier *traefik.yaml* contient la configuation et sera utilisé plus tard pour l'ajout de log et de SSL/TLS.
 > [!NOTE]
 > Il faut monter un volume de Traefik sur le socket Docker pour qu'il ait accès aux containers
 
@@ -184,7 +213,7 @@ La 1ère ligne indique qu'on active les sticky sessions, avec Traefik les sticky
 La 2e ligne indique le nom du cookie et il ne reste plus rien d'autre à faire, Traefik s'occupe de tout.
 
 ### Logs avec Traefik
-Afin de prouver que les sticky session fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
+Afin de prouver que les sticky sessions fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
 Il suffit d'ajouter le paramètre suivant dans le fichier Traefik.yaml :
 ```
 accessLog:
@@ -216,6 +245,36 @@ Les sticky sessions par cookie sont maintenant activées pour l'API HTTP. Un cli
 On remarque dans les logs que l'adresse IP de destination n'a pas changée, donc la requête HTTP a toujours été redirigée vers le même serveur. 
 
 ## Sécurisation TLS
+Pour sécuriser les connexions à notre infrastructure web, nous avons mis en place TLS afin d'utiliser https. Pour cela, nous avons besoin d'un certificat et d'une clé que nous avons généré grâce à openssl et la commande suivante :
+```
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 365
+```
+On a ensuite monté un volume contenant les deux fichiers (la clé *key.pem* et le certificat *cert.pem*) dans le container de traefik.
+```
+- ./certificates:/etc/traefik/certificates
+``` 
+On va devoir ensuite configurer traefik pour activer tls et lui indiquer où se trouvent la clé et le certificat. Pour cela, il faut ajouter au fichier *traefik.yaml* le contenu suivant :
+```
+entryPoints:
+  http:
+    address: ":80"
+
+  https:
+    address: ":443"
+
+tls:
+  certificates:
+    - certFile: /etc/traefik/certificates/cert.pem
+      keyFile: /etc/traefik/certificates/key.pem
+```
+Il y a donc deux choses à configurer, les **entryPoints** qui sont les ports sur lesquels on va pouvoir se connecter et **tls** avec le chemain du certificat et de la clé (précédement monté dans un volume de traefik). Et il ne faut pas oublié d'ajouter également le port 443 au container traefik dans le fichier docker compose (sinon on ne pourra pas l'attteindre depuis l'extérieur).
+
+Désormais, il faut utiliser **https://** dans l'url pour se connecter au serveur web static ou à l'api.
+
+<img width="200" alt="image" src="https://github.com/GuillaumeDnt2/DAI-Web-Infrastructure/assets/114154825/c98c842e-98a5-44ed-80dd-1e3135700abf)"> 
+
+> [!IMPORTANT]
+> Comme le certificat n'est pas fourni par un CA (certificate authority), lors d'une connection le navigateur nous le signalera avec un avertissement mais il faut l'ignorer dans notre cas.
 
 ## Interface de gestion de l'infrastructure
 Nous avons décidé d'utiliser une solution existante pour gérer une infrastructure sur Docker.
