@@ -155,7 +155,7 @@ Nous utilisons le port par défaut pour le site web, le port 3141 toujours pour 
 > [!NOTE]
 > Il faut monter un volume de Traefik sur le socket Docker pour qu'il ait accès aux containers
 
-### Configuration de l'image du server web
+### Configuration de l'image du serveur web
 ```
 webserver:
     build:
@@ -165,7 +165,7 @@ webserver:
     labels:
       - traefik.http.routers.webserver.rule=Host(`localhost`)
 ```
-La commande `.rule=Host('localhost')` permet de configurer Traefik pour qu'il redirige cet url vers la serveur web. Donc pour accèder au site web il faut utiliser l'url "http:localhost".
+La commande `.rule=Host('localhost')` permet de configurer Traefik pour qu'il redirige cet url vers la serveur web. Donc pour accèder au site web il faut utiliser l'url `http://localhost`.
 
 ### Configuration de l'image de l'API
 ```
@@ -214,7 +214,7 @@ La 2e ligne indique le nom du cookie et il ne reste plus rien d'autre à faire, 
 
 ### Logs avec Traefik
 Afin de prouver que les sticky sessions fonctionnent bien, nous pouvons activer les logs d'accès de Traefik.
-Il suffit d'ajouter le paramètre suivant dans le fichier Traefik.yaml :
+Il suffit d'ajouter le paramètre suivant dans le fichier `traefik.yaml` :
 ```
 accessLog:
   filePath: "/logs/access.log"
